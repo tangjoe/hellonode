@@ -16,7 +16,7 @@ node {
 
     stage('Start image') {
         try {
-            sh "docker run -d --name hellonode -p 8000:8000 tangjoe/hellonode"
+            sh "docker run -d --name hellonode tangjoe/hellonode"
             sh "HNAME=`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' hellonode`"
         } catch (Exception e) {
             sh "docker stop hellonode"
