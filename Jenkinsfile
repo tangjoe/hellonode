@@ -18,6 +18,7 @@ node {
         try {
             sh "docker run -d --name hellonode tangjoe/hellonode"
             sh "export HNAME=`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' hellonode`"
+            sh "docker exec hellonode curl http://${HNAME}:8000/"
         } catch (Exception e) {
             sh "docker stop hellonode"
             sh "docker rm hellonode"
