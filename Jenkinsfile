@@ -28,6 +28,7 @@ node {
         try {
             sh "curl http://${HNAME}:8000/"
         } catch (e) {
+            echo "curl error"
         } finally {
             sh "docker stop hellonode-jt"
             sh "docker rm hellonode-jt"
