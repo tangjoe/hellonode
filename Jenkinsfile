@@ -17,8 +17,7 @@ node {
     stage('Start image') {
         try {
             sh "docker run -d --name hellonode tangjoe/hellonode"
-            sh "export HNAME=`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' hellonode`"
-            sh "docker exec hellonode curl http://${HNAME}:8000/"
+            sh "HNAME=`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' hellonode`"
         } catch (Exception e) {
             sh "docker stop hellonode"
             sh "docker rm hellonode"
@@ -27,6 +26,7 @@ node {
     
     stage('Test image') {
         try {
+            echo ${HNAME}
             sh "docker exec hellonode curl http://${HNAME}:8000/"
         } catch (Exception e) {
             echo "curl error"
