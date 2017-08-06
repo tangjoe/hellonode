@@ -18,7 +18,7 @@ node {
         try {
             sh "docker run -d --name hellonode-jt -p 8000:8000 tangjoe/hellonode"
             sh "HNAME=`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' hellonode-jt`"
-            sh "curl http://$HNAME:8000/"
+            sh "curl http://127.0.0.1:8000/"
         } catch (error) {
         } finally {
             sh "docker stop hellonode-jt"
