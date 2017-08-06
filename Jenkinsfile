@@ -26,7 +26,7 @@ node {
     
     stage('Test image') {
         try {
-            sh "curl http://${HNAME}:8000/"
+            sh "docker exec hellonode-jt curl http://${HNAME}:8000/"
         } catch (e) {
             echo "curl error"
         } finally {
