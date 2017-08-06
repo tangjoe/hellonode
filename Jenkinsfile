@@ -17,7 +17,8 @@ node {
     stage('Test image') {
         try {
             sh "docker run -d --name hellonode-jt -p 8000:8000 tangjoe/hellonode"
-            sh "curl http://localhost:8000/"
+            sh "HNAME=`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' hellonode`"
+            sh "curl http://$HNAME:8000/"
         } catch (error) {
         } finally {
             sh "docker stop hellonode-jt"
