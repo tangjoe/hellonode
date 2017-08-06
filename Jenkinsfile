@@ -19,7 +19,8 @@ node {
             sh "docker run -d --name hellonode-jt -p 8000:8000 tangjoe/hellonode"
             sh "HNAME=`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'`"
         } catch (Exception e) {
-            throw error
+            sh "docker stop hellonode-jt"
+            sh "docker rm hellonode-jt"
         }
     }
     
