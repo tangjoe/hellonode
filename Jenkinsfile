@@ -16,22 +16,22 @@ node {
 
     stage('Start image') {
         try {
-            sh "docker run -d --name hellonode-jt -p 8000:8000 tangjoe/hellonode"
-            sh "HNAME=`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' hellonode-jt`"
+            sh "docker run -d --name hellonode -p 8000:8000 tangjoe/hellonode"
+            sh "HNAME=`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' hellonode`"
         } catch (Exception e) {
-            sh "docker stop hellonode-jt"
-            sh "docker rm hellonode-jt"
+            sh "docker stop hellonode"
+            sh "docker rm hellonode"
         }
     }
     
     stage('Test image') {
         try {
-            sh "docker exec hellonode-jt curl http://${HNAME}:8000/"
-        } catch (e) {
+            sh "docker exec hellonode curl http://${HNAME}:8000/"
+        } catch (Exception e) {
             echo "curl error"
         } finally {
-            sh "docker stop hellonode-jt"
-            sh "docker rm hellonode-jt"
+            sh "docker stop hellonode"
+            sh "docker rm hellonode"
         }
     }
 
