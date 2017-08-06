@@ -15,11 +15,13 @@ node {
     }
 
     stage('Test image') {
-        /* Ideally, we would run a test framework against our image.
-         * For this example, we're using a Volkswagen-type approach ;-) */
-
-        app.inside {
-            sh 'echo "Tests passed"'
+        try {
+            sh "docker run -d --rm --name hellonode-jt -p 8000:8000 tangjoe/hellonode"
+            sh "curl http://localhost:8000/"
+        } catch (error) {
+        } finally {
+            sh "docker stop hellonode-jt"
+            sh "docker rm hellonode-jt"
         }
     }
 
