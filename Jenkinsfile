@@ -14,11 +14,19 @@ node {
         app = docker.build("tangjoe/hellonode")
     }
 
-    stage('Test image') {
+    stage('Start image') {
         try {
             sh "docker run -d --name hellonode-jt -p 8000:8000 tangjoe/hellonode"
-            sh "HNAME=`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' hellonode-jt` curl http://${HNAME}:8000/"
-        } catch (error) {
+            sh "HNAME=`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"
+        } catch (Exception e) {
+            throw error
+        }
+    }
+    
+    stage('Test image') {
+        try {
+            sh "curl http://${HNAME}:8000/"
+        } catch (e) {
         } finally {
             sh "docker stop hellonode-jt"
             sh "docker rm hellonode-jt"
