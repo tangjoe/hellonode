@@ -11,11 +11,11 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
         
-        app = docker.build("hello-node-jt:v1")
+        app = docker.build("hello-node-jt:v2")
     }
 
     stage('Start image') {
-        sh "docker run -d --name hello-node hello-node-jt:v1"
+        sh "docker run -d --name hello-node hello-node-jt:v2"
     }
     
     stage('Test image') {
@@ -34,17 +34,7 @@ node {
          * First, the incremental build number from Jenkins
          * Second, the 'latest' tag.
          * Pushing multiple tags is cheap, as all the layers are reused. */
-        sh "docker tag hello-node-jt:v1 master.cfc:8500/development/hello-node-jt:v1"
-        sh "docker push master.cfc:8500/development/hello-node-jt:v1"
-    /***
-        docker.withRegistry('https://master.cfc:8500', 'master.cfc-hub-credentials') {
-    ***/
-            /*
-             * app.push("${env.BUILD_NUMBER}")
-             */
-    /***
-            app.push("v1")
-        }
-    ***/
+        sh "docker tag hello-node-jt:v2 master.cfc:8500/development/hello-node-jt:v2"
+        sh "docker push master.cfc:8500/development/hello-node-jt:v2"
     }
 }
