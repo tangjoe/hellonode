@@ -15,20 +15,14 @@ node {
     }
 
     stage('Start image') {
-        try {
-            sh "docker run -d --name hello-node hello-node-jt:v1"
-            sh "HNAME=`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' hellonode`"
-        } catch (Exception e) {
-            sh "docker stop hello-node"
-            sh "docker rm hello-node"
-        }
+        sh "docker run -d --name hello-node hello-node-jt:v1"
     }
     
     stage('Test image') {
         try {
             sh "docker exec hello-node uname -a"
         } catch (Exception e) {
-            echo "curl error"
+            echo "hello-node test error"
         } finally {
             sh "docker stop hello-node"
             sh "docker rm hello-node"
@@ -44,7 +38,7 @@ node {
             /*
              * app.push("${env.BUILD_NUMBER}")
              */
-            app.push("latest")
+            app.push("v1")
         }
     }
 }
