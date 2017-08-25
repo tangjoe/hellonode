@@ -38,9 +38,11 @@ node {
         sh "docker push master.cfc:8500/development/hello-node-jt:v1"
     /***
         docker.withRegistry('https://master.cfc:8500', 'master.cfc-hub-credentials') {
+    ***/
             /*
              * app.push("${env.BUILD_NUMBER}")
              */
+    /***
             app.push("v1")
         }
     ***/
