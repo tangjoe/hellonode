@@ -11,27 +11,27 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
         
-        app = docker.build("tangjoe/hellonode")
+        app = docker.build("hello-node-jt:v1")
     }
 
     stage('Start image') {
         try {
-            sh "docker run -d --name hellonode tangjoe/hellonode"
+            sh "docker run -d --name hello-node hello-node-jt:v1"
             sh "HNAME=`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' hellonode`"
         } catch (Exception e) {
-            sh "docker stop hellonode"
-            sh "docker rm hellonode"
+            sh "docker stop hello-node"
+            sh "docker rm hello-node"
         }
     }
     
     stage('Test image') {
         try {
-            sh "docker exec hellonode uname -a"
+            sh "docker exec hello-node uname -a"
         } catch (Exception e) {
             echo "curl error"
         } finally {
-            sh "docker stop hellonode"
-            sh "docker rm hellonode"
+            sh "docker stop hello-node"
+            sh "docker rm hello-node"
         }
     }
 
