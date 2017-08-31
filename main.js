@@ -7,6 +7,6 @@ var server = http.createServer(function (request, response) {
   response.end("Hello DevOps, Joe Tang!!!\n");
 });
 
-// listen on localhost:8000
+// listen on localhost:1080
 server.listen(1080);
 console.log("Server listening at http://127.0.0.1:1080/");
