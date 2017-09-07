@@ -32,7 +32,7 @@ node {
          * First, the incremental build number from Jenkins
          * Second, the 'latest' tag.
          * Pushing multiple tags is cheap, as all the layers are reused. */
-        sh "docker tag hello-node-jt:v1 master.cfc:8500/development/hello-node-jt:v1"
-        sh "docker push master.cfc:8500/development/hello-node-jt:v1"
+        sh "docker tag hello-node-jt:v1 mycluster:8500/development/hello-node-jt:v1"
+        sh "docker push mycluster:8500/development/hello-node-jt:v1"
     }
 }
