@@ -33,6 +33,7 @@ node {
          * Second, the 'latest' tag.
          * Pushing multiple tags is cheap, as all the layers are reused. */
         sh "docker tag hello-node-jt:v1 mycluster:8500/development/hello-node-jt:v1"
+        sh "docker login -u admin -p admin mycluster:8500"
         sh "docker push mycluster:8500/development/hello-node-jt:v1"
     }
 }
